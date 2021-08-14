@@ -9,6 +9,7 @@ import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { Avatar, List, ListItem } from "@material-ui/core";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 	typography: {
@@ -25,11 +26,10 @@ const StyledBadge = withStyles((theme) => ({
 	},
 }))(Badge);
 
-function Header() {
+function Header(props) {
 	const classes = useStyles();
 	const { cartItems } = useContext(CartContext);
 	const [anchorEl, setAnchorEl] = React.useState(null);
-
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -38,12 +38,25 @@ function Header() {
 		setAnchorEl(null);
 	};
 
+	const handleLogout = () => {
+		console.log("herein logout")
+		console.log(localStorage.getItem("token"))
+		localStorage.clear();
+		props.history.push("/login");
+	}
+	
+	const handleSettingRedirect = () => {
+		props.history.push(`${props.match.path}/setting`);
+	}
+	const handleAccountRedirect = () => {
+		props.history.push(`${props.match.path}/account`);
+	}
 	const open = Boolean(anchorEl);
 	const id = open ? "simple-popover" : undefined;
 	return (
 		<div class="m-navbar">
 			<ul className="nav-list">
-				<li>cart items {cartItems.length}</li>
+				<li>Cart Items {cartItems.length}</li>
 				<li>
 					<IconButton aria-label="cart">
 						<StyledBadge badgeContent={cartItems.length} color="secondary">
@@ -52,7 +65,7 @@ function Header() {
 					</IconButton>
 				</li>
 				<li>
-					<Avatar onClick={handleClick}>ZE</Avatar>
+					<Avatar onClick={handleClick}></Avatar>
 					<Popover
 						id={id}
 						open={open}
@@ -67,9 +80,9 @@ function Header() {
 							horizontal: "center",
 						}}>
 						<List>
-							<ListItem>Settings</ListItem>
-							<ListItem>Account</ListItem>
-							<ListItem>Logout</ListItem>
+							<ListItem><Button onClick={handleSettingRedirect}>Settings</Button></ListItem>
+							<ListItem><Button onClick={handleAccountRedirect}>Account</Button></ListItem>
+							<ListItem><Button onClick={handleLogout}>Logout</Button></ListItem>
 						</List>
 					</Popover>
 				</li>

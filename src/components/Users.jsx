@@ -82,6 +82,7 @@ function Users(props) {
 	return (
 		<div>
 			<Container>
+			<p className="top-heading">User Lists</p>
 				<Grid container>
 					<Link to={`${props.match.path}/new`}>
 						<Button variant="contained" color="secondary">

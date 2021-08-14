@@ -11,12 +11,13 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import ReactApexChart from "react-apexcharts";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
 	table: {
 		width: "100%",
 	},
-});
+}))
 
 const options = {
 	scales: {
@@ -29,6 +30,7 @@ const options = {
 		],
 	},
 };
+
 
 function DashboardPanel() {
 	const classes = useStyles();
@@ -57,7 +59,7 @@ function DashboardPanel() {
 		labels: ["Sun", "Mon", "Tue", "Wed", "Thr", "Fri", "Sat"],
 		datasets: [
 			{
-				label: "# of Votes",
+				label: "Earned",
 				data: weeklyData,
 				fill: false,
 				backgroundColor: "rgb(255, 99, 132)",

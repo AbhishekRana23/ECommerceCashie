@@ -82,9 +82,15 @@ export default function LoginPanel(props) {
 				},
 			);
 			let data = await result.json();
+			console.log(data)
 			if (data.status === "success") {
 				setErrors([]);
 				localStorage.setItem("token", data.token);
+				localStorage.setItem("role", data.user.role);
+				localStorage.setItem("fullname", data.user.fullname);
+				localStorage.setItem("username", data.user.username);
+				localStorage.setItem("email", data.user.email);
+				localStorage.setItem("userid", data.user._id);
 				props.history.push("/dashboard");
 			} else {
 				setErrors([{ message: "Authentication failed" }]);

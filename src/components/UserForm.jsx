@@ -101,7 +101,6 @@ export default function UserFrom(props) {
 						`User ${method === "PUT" ? "updated" : "created"} successfully...`,
 						"success",
 					);
-					props.history.goBack();
 				} else {
 					Swal.fire("Opps", "Something went wrong...", "error");
 				}

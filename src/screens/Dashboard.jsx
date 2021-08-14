@@ -9,10 +9,13 @@ import "./dashboard.css";
 import Products from "../components/Products";
 import Transactions from "../components/Transactions";
 import Categories from "../components/Categories";
-import Orders from "../components/Orders";
 import UserForm from "../components/UserForm";
 import DashboardPanel from "../components/DashboardPanel";
 import ProductForm from "../components/ProductForm";
+import Reports from "../components/Reports";
+import CategoryForm from "../components/CategoryForm";
+import Settings from "../components/Settings"
+import Account from "../components/Account";
 
 function Dashboard(props) {
 	return (
@@ -23,7 +26,7 @@ function Dashboard(props) {
 				</div>
 				<div className="d-main">
 					<div className="d-top-nav">
-						<Header />
+						<Header {...props}/>
 					</div>
 					<Switch>
 						<Route
@@ -49,12 +52,22 @@ function Dashboard(props) {
 							component={Transactions}
 						/>
 						<Route
+							path={`${props.match.path}/categories/new`}
+							component={CategoryForm}
+						/>
+						<Route
+							path={`${props.match.path}/categories/update/:id`}
+							component={CategoryForm}
+						/>
+						<Route
 							path={`${props.match.path}/categories`}
 							component={Categories}
 						/>
-						<Route path={`${props.match.path}/orders`} component={Orders} />
+						<Route path={`${props.match.path}/report`} component={Reports} />
+						<Route path={`${props.match.path}/setting`} component={Settings} />
+						<Route path={`${props.match.path}/account`} component={Account} />
 						<Route
-							path={`${props.match.path}/main`}
+							path={`${props.match.path}/`}
 							component={DashboardPanel}
 						/>
 					</Switch>

@@ -2,7 +2,6 @@ import logo from "./logo.svg";
 import "./App.css";
 import Heading from "./components/Heading";
 import Person from "./components/Person";
-import Cities from "./components/Cities";
 
 import Counter from "./components/Counter";
 import Counters from "./components/Counters";

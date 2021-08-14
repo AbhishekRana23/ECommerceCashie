@@ -15,31 +15,31 @@ const sidebarLinks = [
 	},
 	{
 		id: 3,
-		label: "Products",
-		icon: <i class="fas fa-sitemap"></i>,
-		classes: ["sidebar-links"],
-		path: "products",
-	},
-	{
-		id: 4,
 		label: "Categories",
 		icon: <i class="fas fa-stopwatch"></i>,
 		classes: ["sidebar-links"],
 		path: "categories",
 	},
 	{
+		id: 4,
+		label: "Products",
+		icon: <i class="fas fa-sitemap"></i>,
+		classes: ["sidebar-links"],
+		path: "products",
+	},
+	{
 		id: 5,
 		label: "Transactions",
-		icon: <i class="fas fa-stopwatch"></i>,
+		icon: <i class="far fa-clipboard"></i>,
 		classes: ["sidebar-links"],
 		path: "transactions",
 	},
 	{
 		id: 6,
-		label: "Orders",
-		icon: <i class="fas fa-stopwatch"></i>,
+		label: "Report",
+		icon: <i class="far fa-chart-bar"></i>,
 		classes: ["sidebar-links"],
-		path: "orders",
+		path: "report",
 	},
 ];
 

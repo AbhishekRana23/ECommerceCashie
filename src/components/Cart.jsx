@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -19,6 +19,7 @@ const useStyles = makeStyles({
 });
 
 function Cart(props) {
+	const componentRef = useRef();
 	const classes = useStyles();
 	const [modalOpen, setModalOpen] = useState(false);
 	const storeSettings = useContext(SettingsContext);
@@ -73,7 +74,7 @@ function Cart(props) {
 					</TableRow>
 				</TableHead>
 				<TableBody>
-					{cartDetails.cartItems.length &&
+					{cartDetails.cartItems.length > 0 &&
 						cartDetails.cartItems.map((item) => (
 							<TableRow key={item._id}>
 								<TableCell align="left">
@@ -107,23 +108,23 @@ function Cart(props) {
 				<TableBody>
 					<TableRow>
 						<TableCell align="left">SubTotal</TableCell>
-						<TableCell align="right">{subTotal.toFixed(2)}</TableCell>
+						<TableCell align="right">{`$${subTotal.toFixed(2)}`}</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell align="left">Discount</TableCell>
-						<TableCell align="right">{discount.toFixed(2)}</TableCell>
+						<TableCell align="right">{`$${discount.toFixed(2)}`}</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell align="left">Tax</TableCell>
-						<TableCell align="right">{tax.toFixed(2)}</TableCell>
+						<TableCell align="right">{`$${tax.toFixed(2)}`}</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell align="left">Grand Total</TableCell>
-						<TableCell align="right">{grandTotal.toFixed(2)}</TableCell>
+						<TableCell align="right">{`$${grandTotal.toFixed(2)}`}</TableCell>
 					</TableRow>
 					<TableRow>
 						<TableCell align="left">
-							<Button variant="contained" color="dark" size="large">
+							<Button onClick={() => cartDetails.removeAllCartItems()} variant="contained" color="dark" size="large">
 								Cancel
 							</Button>
 						</TableCell>

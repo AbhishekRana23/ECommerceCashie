@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -14,6 +14,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import { Typography } from "@material-ui/core";
 import moment from "moment";
+import { useReactToPrint } from 'react-to-print';
+import ReactToPrint from "react-to-print";
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -23,6 +25,9 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
+
+
+
 export default function RecieptModal({
 	isOpen,
 	transactionData,
@@ -31,10 +36,21 @@ export default function RecieptModal({
 }) {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
-
-	return (
-		<div>
-			<Dialog
+	const [Show, setShow] = React.useState(true);
+	const handlePrint = useReactToPrint({
+		content: () => componentRef.current,
+		onBeforeGetContent: ()=> {
+			setShow(false)
+			return Promise.resolve();
+		},
+		onAfterPrint: () => {
+			setShow(true)
+			return Promise.resolve();
+		},
+	  });
+	const componentRef = useRef();
+	  const ComponentToPrint = React.forwardRef((props, ref) => (
+			<Dialog ref={ref}
 				open={isOpen}
 				onClose={onClose}
 				aria-labelledby="alert-dialog-title"
@@ -82,13 +98,13 @@ export default function RecieptModal({
 								transactionData.products.map((item) => (
 									<TableRow key={item._id}>
 										<TableCell align="left">
-											{item.name} {item.price}
+											{item.name} {`$${item.price}`}
 										</TableCell>
 										<TableCell align="right">{item.qty} </TableCell>
-										<TableCell align="right">{item.price} </TableCell>
+										<TableCell align="right">{`$${item.price}`} </TableCell>
 
 										<TableCell align="right">
-											{(item.price * item.qty).toFixed(2)}
+											{`$${(item.price * item.qty).toFixed(2)}`}
 										</TableCell>
 									</TableRow>
 								))}
@@ -98,13 +114,13 @@ export default function RecieptModal({
 						<TableRow>
 							<TableCell align="right">Sub Total</TableCell>
 							<TableCell align="right">
-								{transactionData && transactionData.subtotal}
+								{`$${transactionData && transactionData.subtotal}`}
 							</TableCell>
 						</TableRow>
 						<TableRow>
 							<TableCell align="right">Discount</TableCell>
 							<TableCell align="right">
-								{transactionData && transactionData.discount}
+							{`$${transactionData && transactionData.discount}`}
 							</TableCell>
 						</TableRow>
 						<TableRow>
@@ -115,23 +131,25 @@ export default function RecieptModal({
 							</TableCell>
 							<TableCell align="right">
 								<Typography variant="h5" component="h5">
-									{transactionData && transactionData.grandtotal}
+								{`$${transactionData && transactionData.grandtotal}`}
 								</Typography>
 							</TableCell>
 						</TableRow>
 					</Table>
+				{Show ?<Button
+				onClick={handlePrint}
+					variant="contained"
+					fullWidth
+					className="c-btn show"
+					color="primary">
+					Print Receipt
+				</Button>:<></>}
 				</DialogContent>
-				<DialogActions>
-					<Button
-						onClick={onClose}
-						variant="contained"
-						fullWidth
-						className="c-btn"
-						color="primary">
-						Print Receipt
-					</Button>
-				</DialogActions>
 			</Dialog>
+	));
+	return (
+		<div>
+			<ComponentToPrint ref={componentRef}/>
 		</div>
 	);
 }
