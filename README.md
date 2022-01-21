@@ -1,3 +1,10 @@
+This Project is About Ecommerce WEbapp Made with help of React.
+
+It uses mangoDB and has features of Form Validation.
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
